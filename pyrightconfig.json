@@ -1,0 +1,11 @@
+{
+	"include": [
+    	"src",
+		"tests"
+  	],
+	"exclude": [
+		"**/__pycache__"
+	],
+	"reportMissingImports": false,
+	"reportUnknownLambdaType": false
+}
