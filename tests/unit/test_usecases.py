@@ -18,3 +18,17 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+import unittest
+
+from mediapills.kernel.core.usecases import BaseUseCase
+
+
+class TestBaseUseCase(unittest.TestCase):
+    def test_inheritance(self) -> None:
+        class DummyUseCase(BaseUseCase):  # type: ignore
+            def execute(self) -> None:
+                pass
+
+        uc = DummyUseCase()
+
+        self.assertTrue(isinstance(uc, object))

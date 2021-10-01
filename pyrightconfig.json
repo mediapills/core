@@ -6,6 +6,5 @@
 	"exclude": [
 		"**/__pycache__"
 	],
-	"reportMissingImports": false,
-	"reportUnknownLambdaType": false
+	"reportMissingImports": false
 }

@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills.
+# Copyright (c) 2021-2021 Mediapills Kernel.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -20,8 +20,14 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import unittest
 
+from mediapills.kernel.core.entities import BaseEntity
 
-class DummyTest(unittest.TestCase):
-    def test_dummy(self) -> None:
 
-        self.assertTrue(True)
+class TestBaseEntity(unittest.TestCase):
+    def test_inheritance(self) -> None:
+        class DummyEntity(BaseEntity):  # type: ignore
+            pass
+
+        ent = DummyEntity()
+
+        self.assertTrue(isinstance(ent, object))

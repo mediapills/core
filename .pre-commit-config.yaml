@@ -70,4 +70,4 @@ repos:
          ^tests/.*\.py$
        args:
          - --convention=pep257
-         - --add-ignore=D100,D104,D205,D400
+         - --add-ignore=D100,D205,D400

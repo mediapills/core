@@ -18,3 +18,12 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+import abc
+
+
+class BaseUseCase(metaclass=abc.ABCMeta):  # dead: disable
+    """Contains application specific business rules."""
+
+    def execute(self) -> None:  # dead: disable
+        """Perform business logic and change system state."""
+        raise NotImplementedError
