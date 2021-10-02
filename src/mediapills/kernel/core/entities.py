@@ -19,9 +19,82 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import abc
+from datetime import datetime
+from enum import Enum
+from typing import Optional
+
+"""TODO: add description."""
+LOGGING_LEVEL_DEBUG = "debug"
+
+"""TODO: add description."""
+LOGGING_LEVEL_INFO = "info"
+
+"""TODO: add description."""
+LOGGING_LEVEL_WARN = "warn"
+
+"""TODO: add description."""
+LOGGING_LEVEL_ERROR = "error"
+
+"""TODO: add description."""
+LOGGING_LEVEL_CRITICAL = "critical"
+
+LOGGING_LEVELS = frozenset(  # dead: disable
+    [
+        LOGGING_LEVEL_DEBUG,
+        LOGGING_LEVEL_INFO,
+        LOGGING_LEVEL_WARN,
+        LOGGING_LEVEL_ERROR,
+        LOGGING_LEVEL_CRITICAL,
+    ]
+)
 
 
-class BaseEntity(metaclass=abc.ABCMeta):  # dead: disable
+class LoggingLevel(Enum):
+    """Enumerated logging constants."""
+
+    DEBUG = LOGGING_LEVEL_DEBUG
+    INFO = LOGGING_LEVEL_INFO
+    WARN = LOGGING_LEVEL_WARN
+    ERROR = LOGGING_LEVEL_ERROR
+    CRITICAL = LOGGING_LEVEL_CRITICAL
+
+
+class BaseEntity(metaclass=abc.ABCMeta):
     """Encapsulate Enterprise wide business rules."""
 
     pass
+
+
+class LogRecordEntity(BaseEntity):  # dead: disable
+    """Information about a logging event."""
+
+    __slots__ = ["_msg", "_name", "_lvl", "_created", "_thread"]
+
+    def __init__(
+        self, msg: str, lvl: LoggingLevel, name: str, created: Optional[datetime] = None
+    ):
+        """Log Record constructor."""
+        self._msg = msg
+        self._lvl = lvl
+        self._name = name
+        self._created = created
+
+    @property
+    def msg(self) -> str:
+        """Log message."""
+        return self._msg
+
+    @property
+    def lvl(self) -> LoggingLevel:
+        """Numeric logging level for the message."""
+        return self._lvl
+
+    @property
+    def name(self) -> str:
+        """Name of the logger (logging channel)."""
+        return self._name
+
+    @property
+    def created(self) -> Optional[datetime]:
+        """Time when the log record was created."""
+        return self._created
