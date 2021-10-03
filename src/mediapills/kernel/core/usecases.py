@@ -21,6 +21,7 @@
 import abc
 
 from mediapills.kernel.core.loggers import BaseLogger
+from mediapills.kernel.core.outputs import BaseOutput
 
 
 class BaseUseCase(metaclass=abc.ABCMeta):
@@ -31,7 +32,7 @@ class BaseUseCase(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
 
-class BaseLoggerAwareUseCase(BaseUseCase, metaclass=abc.ABCMeta):  # dead: disable
+class BaseLoggerAwareUseCase(BaseUseCase, metaclass=abc.ABCMeta):
     """Contains application logger interface aware business rules."""
 
     def __init__(self, logger: BaseLogger):
@@ -47,3 +48,24 @@ class BaseLoggerAwareUseCase(BaseUseCase, metaclass=abc.ABCMeta):  # dead: disab
     def logger(self, logger: BaseLogger) -> None:
         """Property logger getter."""
         self._logger = logger
+
+
+class BaseOutputAwareUseCase(  # dead: disable
+    BaseLoggerAwareUseCase, metaclass=abc.ABCMeta
+):
+    """Contains application output and logger interface aware business rules."""
+
+    def __init__(self, logger: BaseLogger, output: BaseOutput):
+        """Class constructor."""
+        super().__init__(logger=logger)
+        self._output = output
+
+    @property
+    def output(self) -> BaseOutput:
+        """Property output getter."""
+        return self._output
+
+    @output.setter
+    def output(self, output: BaseOutput) -> None:
+        """Property output getter."""
+        self._output = output

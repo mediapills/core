@@ -18,18 +18,24 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-import unittest
-from unittest.mock import Mock
+import typing as t
 
-from mediapills.kernel.core.usecases import BaseOutputAwareUseCase
+from mediapills.kernel.core.entities import BaseEntity
 
 
-class TestBaseUseCase(unittest.TestCase):
-    def test_inheritance(self) -> None:
-        class DummyUseCase(BaseOutputAwareUseCase):  # type: ignore
-            def execute(self) -> None:
-                pass
+class BaseOutput:
+    """Use case output class."""
 
-        uc = DummyUseCase(logger=Mock(), output=Mock())
+    def __init__(self) -> None:
+        """Class constructor."""
+        self._data: t.List[BaseEntity] = []
 
-        self.assertTrue(isinstance(uc, object))
+    @property
+    def data(self) -> t.List[BaseEntity]:
+        """Property output data getter."""
+        return self._data
+
+    @data.setter
+    def data(self, data: t.List[BaseEntity]) -> None:
+        """Property output data setter."""
+        self._data = data
