@@ -21,13 +21,13 @@
 import unittest
 from unittest.mock import Mock
 
-from mediapills.kernel.loggers import PythonStdOutLoggerServiceProvider
+from mediapills.kernel.loggers import PythonLoggerAdapter
 
 
 class TestPythonStdOutLoggerServiceProvider(unittest.TestCase):
     @property
-    def mock_logger(self) -> PythonStdOutLoggerServiceProvider:
-        python_logger = PythonStdOutLoggerServiceProvider()
+    def mock_logger(self) -> PythonLoggerAdapter:
+        python_logger = PythonLoggerAdapter()
         python_logger._logger = Mock()
 
         return python_logger
