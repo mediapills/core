@@ -24,19 +24,22 @@ from enum import Enum
 from typing import Any
 from typing import Optional
 
-"""TODO: add description."""
+"""Information that is diagnostically helpful to people more than just developers."""
 LOGGING_LEVEL_DEBUG = "debug"
 
-"""TODO: add description."""
+"""Generally useful information to log (service start/stop, configuration
+assumptions, etc)."""
 LOGGING_LEVEL_INFO = "info"
 
-"""TODO: add description."""
+"""Non-fatal errors that can potentially cause application oddities."""
 LOGGING_LEVEL_WARN = "warn"
 
-"""TODO: add description."""
+"""Any error which is fatal to the operation, but not the service or
+application (can't open a required file, missing data, etc.)."""
 LOGGING_LEVEL_ERROR = "error"
 
-"""TODO: add description."""
+"""Any error that is forcing a shutdown of the service or application to
+prevent data loss (or further data loss)."""
 LOGGING_LEVEL_CRITICAL = "critical"
 
 LOGGING_LEVELS = frozenset(  # dead: disable
