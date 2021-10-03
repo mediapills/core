@@ -20,11 +20,65 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import os
 import sys
-from typing import List
-from typing import Optional
+import typing as t
 
 from mediapills.kernel.core.entities import KeyValueEntity
+from mediapills.kernel.core.repositories import BaseRepository
 from mediapills.kernel.core.repositories import BaseViewRepository
+
+
+class DictRepositoryAdapter(  # dead: disable
+    BaseRepository  # type: ignore
+):
+    """Dictionary variables repository adapter."""
+
+    def __init__(self, data: t.Optional[t.Dict[str, t.Any]] = None):
+        """Class constructor."""
+        super().__init__()
+        self._data = data or {}
+
+    def get_one(self, uuid: str) -> t.Optional[KeyValueEntity]:  # dead: disable
+        """Retrieve dict element if exists."""
+        if uuid not in self._data:
+            return None
+
+        return KeyValueEntity(uuid=uuid, val=self._data.get(uuid, None))
+
+    def get_all(
+        self,
+        limit: t.Optional[int] = None,  # dead: disable
+        offset: t.Optional[int] = None,  # dead: disable
+    ) -> t.List[KeyValueEntity]:
+        """Retrieve all dict data."""
+        return [KeyValueEntity(uuid=k, val=v) for k, v in self._data.items()]
+
+    def insert(  # dead: disable
+        self, entity: KeyValueEntity
+    ) -> t.Optional[KeyValueEntity]:
+        """Insert row into table."""
+        if entity.uuid in self._data:
+            raise KeyError()
+
+        self._data[entity.uuid] = entity.value
+        return entity
+
+    def update(  # dead: disable
+        self, entity: KeyValueEntity
+    ) -> t.Optional[KeyValueEntity]:
+        """Update row in table."""
+        if entity.uuid not in self._data:
+            raise KeyError()
+
+        self._data[entity.uuid] = entity.value
+        return entity
+
+    def delete(self, uuid: str) -> bool:  # dead: disable
+        """Delete row from table that satisfy the condition where uuid equal value."""
+        if uuid not in self._data:
+            return False
+
+        del self._data[uuid]
+        return True
 
 
 class EnvironRepository(  # dead: disable
@@ -32,7 +86,7 @@ class EnvironRepository(  # dead: disable
 ):
     """Environment variables read only repository."""
 
-    def get_one(self, uuid: str) -> Optional[KeyValueEntity]:  # dead: disable
+    def get_one(self, uuid: str) -> t.Optional[KeyValueEntity]:  # dead: disable
         """Retrieve environment variable by name."""
         if sys.platform == "win32":
             uuid = uuid.upper()  # pragma: no cover
@@ -41,8 +95,10 @@ class EnvironRepository(  # dead: disable
         return None if val is None else KeyValueEntity(uuid=uuid, val=val)
 
     def get_all(
-        self, limit: Optional[int] = None, offset: Optional[int] = None  # dead: disable
-    ) -> List[KeyValueEntity]:
+        self,
+        limit: t.Optional[int] = None,  # dead: disable
+        offset: t.Optional[int] = None,  # dead: disable
+    ) -> t.List[KeyValueEntity]:
         """Retrieve all environment variables."""
         items = dict(os.environ).items()
         return [KeyValueEntity(uuid=k, val=v) for k, v in items]

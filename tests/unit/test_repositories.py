@@ -20,11 +20,45 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import sys
 import unittest
+from unittest.mock import Mock
 from unittest.mock import patch
 
+from mediapills.kernel.repositories import DictRepositoryAdapter
 from mediapills.kernel.repositories import EnvironRepository
 
 _MODULE_LOCATION_OS_ENVIRON_ = "mediapills.kernel.repositories.os.environ"
+
+
+class TestDictRepositoryAdapter(unittest.TestCase):
+    def test_find_one_should_return_one(self) -> None:
+        repo = DictRepositoryAdapter({"key": "val"})
+
+        self.assertEqual("val", repo.get_one("key").value)
+
+    def test_find_all_should_return_data(self) -> None:
+        repo = DictRepositoryAdapter({"key": "val"})
+
+        self.assertEqual(1, len(repo.get_all()))
+
+    def test_insert_should_add(self) -> None:
+        repo = DictRepositoryAdapter({})
+        record = Mock()
+        repo.insert(record)
+
+        self.assertEqual(1, len(repo.get_all()))
+
+    def test_update_should_replace(self) -> None:
+        repo = DictRepositoryAdapter({"key": "val"})
+        record = Mock(uuid="key")
+        repo.update(record)
+
+        self.assertNotEqual("val", repo.get_one("key").value)
+
+    def test_delete_should_remove(self) -> None:
+        repo = DictRepositoryAdapter({"key": "val"})
+
+        self.assertTrue(repo.delete("key"))
+        self.assertEqual(0, len(repo.get_all()))
 
 
 class TestEnvironRepository(unittest.TestCase):

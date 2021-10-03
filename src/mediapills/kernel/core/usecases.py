@@ -29,7 +29,7 @@ class BaseUseCase(metaclass=abc.ABCMeta):
 
     def execute(self) -> None:  # dead: disable
         """Perform business logic and change system state."""
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
 class BaseLoggerAwareUseCase(BaseUseCase, metaclass=abc.ABCMeta):

@@ -42,20 +42,24 @@ class BaseViewRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
 
-class BaseRepository(BaseViewRepository, metaclass=ABCMeta):  # dead: disable
+class BaseRepository(BaseViewRepository, metaclass=ABCMeta):
     """Well documented way of working with manageable data source."""
 
-    @abstractmethod  # dead: disable
-    def insert(self, entity: BaseUUIDAwareEntity) -> Optional[BaseUUIDAwareEntity]:
+    @abstractmethod
+    def insert(  # dead: disable
+        self, entity: BaseUUIDAwareEntity
+    ) -> Optional[BaseUUIDAwareEntity]:
         """Insert row into table."""
         raise NotImplementedError()
 
-    @abstractmethod  # dead: disable
-    def update(self, entity: BaseUUIDAwareEntity) -> Optional[BaseUUIDAwareEntity]:
+    @abstractmethod
+    def update(  # dead: disable
+        self, entity: BaseUUIDAwareEntity
+    ) -> Optional[BaseUUIDAwareEntity]:
         """Update row in table."""
         raise NotImplementedError()
 
-    @abstractmethod  # dead: disable
-    def delete(self, uuid: str) -> bool:
+    @abstractmethod
+    def delete(self, uuid: str) -> bool:  # dead: disable
         """Delete row from table that satisfy the condition where uuid equal value."""
         raise NotImplementedError()
