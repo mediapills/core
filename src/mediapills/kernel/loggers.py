@@ -27,7 +27,9 @@ from mediapills.kernel.core.entities import LoggingLevel
 from mediapills.kernel.core.loggers import BaseLogger
 
 
-class PythonStdOutLoggerServiceProvider(BaseLogger):  # type: ignore  # dead: disable
+class PythonStdOutLoggerServiceProvider(  # dead: disable
+    BaseLogger  # type: ignore
+):
     """Python logging Adapter to BaseLogger interface."""
 
     def __init__(self, level: int = logging.INFO):

@@ -21,6 +21,7 @@
 import abc
 from datetime import datetime
 from enum import Enum
+from typing import Any
 from typing import Optional
 
 """TODO: add description."""
@@ -63,6 +64,47 @@ class BaseEntity(metaclass=abc.ABCMeta):
     """Encapsulate Enterprise wide business rules."""
 
     pass
+
+
+class BaseUUIDAwareEntity(BaseEntity, metaclass=abc.ABCMeta):
+    """Entity with uuid property interface."""
+
+    __slots__ = ["_uuid"]
+
+    def __init__(self, uuid: str):
+        """Log Record constructor."""
+        self._uuid = uuid
+
+    @property
+    def uuid(self) -> str:
+        """Property UUID getter."""
+        return self._uuid
+
+    @uuid.setter
+    def uuid(self, uuid: str) -> None:
+        """Property UUID setter."""
+        self._uuid = uuid
+
+
+class KeyValueEntity(BaseUUIDAwareEntity):
+    """Entity for key-value storages."""
+
+    __slots__ = ["_uuid", "_value"]
+
+    def __init__(self, uuid: str, val: Any):
+        """Log Record constructor."""
+        super().__init__(uuid=uuid)
+        self._value = val
+
+    @property
+    def value(self) -> Any:
+        """Property val getter."""
+        return self._value
+
+    @value.setter
+    def value(self, val: str) -> None:
+        """Property val setter."""
+        self._value = val
 
 
 class LogRecordEntity(BaseEntity):  # dead: disable
