@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Kernel.
+# Copyright (c) 2021-2021 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -22,9 +22,9 @@ import os
 import sys
 import typing as t
 
-from mediapills.kernel.core.entities import KeyValueEntity
-from mediapills.kernel.core.repositories import BaseRepository
-from mediapills.kernel.core.repositories import BaseViewRepository
+from mediapills.core.domain.entities import KeyValueEntity
+from mediapills.core.domain.repositories import BaseRepository
+from mediapills.core.domain.repositories import BaseViewRepository
 
 
 class DictRepositoryAdapter(  # dead: disable

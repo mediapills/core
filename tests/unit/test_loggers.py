@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Kernel.
+# Copyright (c) 2021-2021 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -21,10 +21,10 @@
 import unittest
 from unittest.mock import Mock
 
-from mediapills.kernel.loggers import PythonLoggerAdapter
+from mediapills.core.loggers import PythonLoggerAdapter
 
 
-class TestPythonStdOutLoggerServiceProvider(unittest.TestCase):
+class TestPythonLoggerAdapter(unittest.TestCase):
     @property
     def mock_logger(self) -> PythonLoggerAdapter:
         python_logger = PythonLoggerAdapter()

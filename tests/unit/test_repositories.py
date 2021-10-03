@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Kernel.
+# Copyright (c) 2021-2021 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -23,13 +23,18 @@ import unittest
 from unittest.mock import Mock
 from unittest.mock import patch
 
-from mediapills.kernel.repositories import DictRepositoryAdapter
-from mediapills.kernel.repositories import EnvironRepository
+from mediapills.core.repositories import DictRepositoryAdapter
+from mediapills.core.repositories import EnvironRepository
 
-_MODULE_LOCATION_OS_ENVIRON_ = "mediapills.kernel.repositories.os.environ"
+_MODULE_LOCATION_OS_ENVIRON_ = "mediapills.core.repositories.os.environ"
 
 
 class TestDictRepositoryAdapter(unittest.TestCase):
+    def test_find_one_should_return_none(self) -> None:
+        repo = DictRepositoryAdapter()
+
+        self.assertIsNone(repo.get_one("key"))
+
     def test_find_one_should_return_one(self) -> None:
         repo = DictRepositoryAdapter({"key": "val"})
 
@@ -59,6 +64,11 @@ class TestDictRepositoryAdapter(unittest.TestCase):
 
         self.assertTrue(repo.delete("key"))
         self.assertEqual(0, len(repo.get_all()))
+
+    def test_delete_should_skip(self) -> None:
+        repo = DictRepositoryAdapter()
+
+        self.assertFalse(repo.delete("key"))
 
 
 class TestEnvironRepository(unittest.TestCase):

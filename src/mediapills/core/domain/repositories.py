@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Kernel.
+# Copyright (c) 2021-2021 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -23,7 +23,7 @@ from abc import abstractmethod
 from typing import List
 from typing import Optional
 
-from mediapills.kernel.core.entities import BaseUUIDAwareEntity
+from mediapills.core.domain.entities import BaseUUIDAwareEntity
 
 
 class BaseViewRepository(metaclass=ABCMeta):

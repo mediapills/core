@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Kernel.
+# Copyright (c) 2021-2021 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -20,8 +20,8 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import abc
 
-from mediapills.kernel.core.loggers import BaseLogger
-from mediapills.kernel.core.outputs import BaseOutput
+from mediapills.core.domain.loggers import BaseLogger
+from mediapills.core.domain.outputs import BaseOutput
 
 
 class BaseUseCase(metaclass=abc.ABCMeta):

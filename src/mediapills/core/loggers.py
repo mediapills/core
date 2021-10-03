@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Kernel.
+# Copyright (c) 2021-2021 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -18,16 +18,28 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-import abc
+"""This module implements classes with BaseLogger interface."""
+import logging
+import sys
 import typing as t
 
-from mediapills.kernel.core.entities import LoggingLevel
+from mediapills.core.domain.entities import LoggingLevel
+from mediapills.core.domain.loggers import BaseLogger
 
 
-class BaseLogger(metaclass=abc.ABCMeta):
-    """Describe PEP 282 logging class interface."""
+class PythonLoggerAdapter(  # dead: disable
+    BaseLogger  # type: ignore
+):
+    """Python logging Adapter to BaseLogger interface."""
 
-    @abc.abstractmethod
+    def __init__(self, level: int = logging.INFO):
+        """Class constructor."""
+        # TODO add logging formatters manager
+
+        logging.basicConfig(stream=sys.stdout, level=level)
+        logger = logging.getLogger(__name__)
+        self._logger = logger
+
     def log(
         self,
         lvl: LoggingLevel,
@@ -36,39 +48,40 @@ class BaseLogger(metaclass=abc.ABCMeta):
         **kwargs: t.Dict[str, t.Any]
     ) -> None:
         """General logging method."""
-        raise NotImplementedError()
+        self._logger.log(lvl.value, msg, *args, **kwargs)  # type: ignore
 
-    @abc.abstractmethod
     def debug(
         self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
     ) -> None:
         """Log a message with level DEBUG on this logger."""
-        self.log(LoggingLevel.DEBUG, msg, *args, **kwargs)
+        self._logger.debug(msg, *args, **kwargs)  # type: ignore
 
-    @abc.abstractmethod
     def info(
         self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
     ) -> None:
         """Log a message with level INFO on this logger."""
-        self.log(LoggingLevel.INFO, msg, *args, **kwargs)
+        self._logger.info(msg, *args, **kwargs)  # type: ignore
 
-    @abc.abstractmethod
     def warn(
         self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
     ) -> None:
         """Log a message with level WARN on this logger."""
-        self.log(LoggingLevel.WARN, msg, *args, **kwargs)
+        self._logger.warn(msg, *args, **kwargs)  # type: ignore
 
-    @abc.abstractmethod
+    def warning(
+        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
+    ) -> None:
+        """Log a message with level WARN alias."""
+        self._logger.warning(msg, *args, **kwargs)  # type: ignore
+
     def error(
         self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
     ) -> None:
         """Log a message with level ERROR on this logger."""
-        self.log(LoggingLevel.ERROR, msg, *args, **kwargs)
+        self._logger.error(msg, *args, **kwargs)  # type: ignore
 
-    @abc.abstractmethod
     def critical(
         self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
     ) -> None:
         """Log a message with level CRITICAL on this logger."""
-        self.log(LoggingLevel.CRITICAL, msg, *args, **kwargs)
+        self._logger.critical(msg, *args, **kwargs)  # type: ignore

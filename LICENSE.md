@@ -1,4 +1,4 @@
-Copyright (c) 2021-2021 Mediapills Kernel.
+Copyright (c) 2021-2021 Mediapills Core.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
