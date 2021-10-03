@@ -19,16 +19,17 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import unittest
+from unittest.mock import Mock
 
-from mediapills.kernel.core.usecases import BaseUseCase
+from mediapills.kernel.core.usecases import BaseLoggerAwareUseCase
 
 
 class TestBaseUseCase(unittest.TestCase):
     def test_inheritance(self) -> None:
-        class DummyUseCase(BaseUseCase):  # type: ignore
+        class DummyUseCase(BaseLoggerAwareUseCase):  # type: ignore
             def execute(self) -> None:
                 pass
 
-        uc = DummyUseCase()
+        uc = DummyUseCase(logger=Mock())
 
         self.assertTrue(isinstance(uc, object))

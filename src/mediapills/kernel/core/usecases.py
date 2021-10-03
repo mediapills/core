@@ -20,10 +20,30 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import abc
 
+from mediapills.kernel.core.loggers import BaseLogger
 
-class BaseUseCase(metaclass=abc.ABCMeta):  # dead: disable
+
+class BaseUseCase(metaclass=abc.ABCMeta):
     """Contains application specific business rules."""
 
     def execute(self) -> None:  # dead: disable
         """Perform business logic and change system state."""
         raise NotImplementedError
+
+
+class BaseLoggerAwareUseCase(BaseUseCase, metaclass=abc.ABCMeta):  # dead: disable
+    """Contains application logger interface aware business rules."""
+
+    def __init__(self, logger: BaseLogger):
+        """Class constructor."""
+        self._logger = logger
+
+    @property
+    def logger(self) -> BaseLogger:
+        """Property logger getter."""
+        return self._logger
+
+    @logger.setter
+    def logger(self, logger: BaseLogger) -> None:
+        """Property logger getter."""
+        self._logger = logger
