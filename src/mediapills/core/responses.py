@@ -19,12 +19,9 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import abc
+import typing as t
 from enum import Enum
-from typing import Any
-from typing import Dict
 
-
-# Successful response codes group
 
 """The request succeeded."""
 HTTP_RESPONSE_STATUS_CODE_OK = 200
@@ -35,14 +32,10 @@ HTTP_RESPONSE_STATUS_CODE_CREATED = 201
 """There is no content to send for this request, but the headers may be useful."""
 HTTP_RESPONSE_STATUS_CODE_NO_CONTENT = 204
 
-# Redirection messages codes group
-
 """This response code means that the URI of requested resource has been changed
 temporarily.
 """
 HTTP_RESPONSE_STATUS_CODE_FOUND = 302
-
-# Client error responses codes group
 
 """The server could not understand the request due to invalid syntax."""
 HTTP_RESPONSE_STATUS_CODE_BAD_REQUEST = 400
@@ -74,6 +67,48 @@ HTTP_RESPONSE_STATUS_CODE_ENTITY = 422
 
 """The server has encountered a situation it does not know how to handle."""
 HTTP_RESPONSE_STATUS_CODE_INTERNAL_SERVER_ERROR = 500
+
+
+"""Information response code group."""
+HTTP_RESPONSE_STATUS_CODES_INFORMATIONAL: t.FrozenSet[t.List[int]] = frozenset([])
+
+"""Successful response code group."""
+HTTP_RESPONSE_STATUS_CODES_SUCCESSFUL = frozenset(
+    [
+        HTTP_RESPONSE_STATUS_CODE_OK,
+        HTTP_RESPONSE_STATUS_CODE_CREATED,
+        HTTP_RESPONSE_STATUS_CODE_NO_CONTENT,
+    ]
+)
+
+"""Successful response code group."""
+HTTP_RESPONSE_STATUS_CODE_REDIRECTIONS = frozenset([HTTP_RESPONSE_STATUS_CODE_FOUND])
+
+"""Client Error response code group."""
+HTTP_RESPONSE_STATUS_CODE_CLIENT_ERRORS = frozenset(
+    [
+        HTTP_RESPONSE_STATUS_CODE_BAD_REQUEST,
+        HTTP_RESPONSE_STATUS_CODE_UNAUTHORIZED,
+        HTTP_RESPONSE_STATUS_CODE_FORBIDDEN,
+        HTTP_RESPONSE_STATUS_CODE_NOT_FOUND,
+        HTTP_RESPONSE_STATUS_CODE_CONFLICT,
+        HTTP_RESPONSE_STATUS_CODE_ENTITY,
+    ]
+)
+
+"""Client Error response code group."""
+HTTP_RESPONSE_STATUS_CODE_SERVER_ERRORS = frozenset(
+    [HTTP_RESPONSE_STATUS_CODE_INTERNAL_SERVER_ERROR]
+)
+
+"""All available HTTP response codes."""
+HTTP_RESPONSE_STATUS_CODES = frozenset(  # dead: disable
+    *HTTP_RESPONSE_STATUS_CODES_INFORMATIONAL,
+    *HTTP_RESPONSE_STATUS_CODES_SUCCESSFUL,
+    *HTTP_RESPONSE_STATUS_CODE_REDIRECTIONS,
+    *HTTP_RESPONSE_STATUS_CODE_CLIENT_ERRORS,
+    *HTTP_RESPONSE_STATUS_CODE_SERVER_ERRORS,
+)
 
 
 class HTTPResponseStatus(Enum):
@@ -109,36 +144,36 @@ class BaseHTTPResponse(metaclass=abc.ABCMeta):  # dead: disable
 
     @property  # type: ignore
     @abc.abstractmethod
-    def data(self) -> Any:
+    def data(self) -> t.Any:
         """HTTP response data getter."""
         raise NotImplementedError()
 
     @data.setter  # type: ignore
     @abc.abstractmethod
-    def data(self, value: Any) -> None:
+    def data(self, value: t.Any) -> None:
         """HTTP response data setter."""
         raise NotImplementedError()
 
     @property  # type: ignore
     @abc.abstractmethod
-    def headers(self) -> Dict[str, str]:
+    def headers(self) -> t.Dict[str, str]:
         """Headers property getter."""
         raise NotImplementedError()
 
     @headers.setter  # type: ignore
     @abc.abstractmethod
-    def headers(self, headers: Dict[str, str]) -> None:
+    def headers(self, headers: t.Dict[str, str]) -> None:
         """Headers property setter."""
         raise NotImplementedError()
 
     @property  # type: ignore
     @abc.abstractmethod
-    def cookies(self) -> Dict[str, str]:
+    def cookies(self) -> t.Dict[str, str]:
         """Cookies property getter."""
         raise NotImplementedError()
 
     @cookies.setter  # type: ignore
     @abc.abstractmethod
-    def cookies(self, cookie: Dict[str, str]) -> None:
+    def cookies(self, cookie: t.Dict[str, str]) -> None:
         """Cookies property setter."""
         raise NotImplementedError()
