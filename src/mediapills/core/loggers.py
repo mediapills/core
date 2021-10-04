@@ -27,9 +27,7 @@ from mediapills.core.domain.entities import LoggingLevel
 from mediapills.core.domain.loggers import BaseLogger
 
 
-class PythonLoggerAdapter(  # dead: disable
-    BaseLogger  # type: ignore
-):
+class PythonLoggerAdapter(BaseLogger):  # dead: disable
     """Python logging Adapter to BaseLogger interface."""
 
     def __init__(self, level: int = logging.INFO):

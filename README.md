@@ -19,7 +19,7 @@ source mediapills/bin/activate
 pip install git+ssh://git@github.com/mediapills/core.git@dev#egg=mediapills.core
 ```
 
-## Windows (CMD/PowerShell)¶
+## Windows (CMD/PowerShell)
 
 To install package on Windows (CMD/PowerShell)
 

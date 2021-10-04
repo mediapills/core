@@ -27,9 +27,7 @@ from mediapills.core.domain.repositories import BaseRepository
 from mediapills.core.domain.repositories import BaseViewRepository
 
 
-class DictRepositoryAdapter(  # dead: disable
-    BaseRepository  # type: ignore
-):
+class DictRepositoryAdapter(BaseRepository):  # dead: disable
     """Dictionary variables repository adapter."""
 
     def __init__(self, data: t.Optional[t.Dict[str, t.Any]] = None):
@@ -44,7 +42,7 @@ class DictRepositoryAdapter(  # dead: disable
 
         return KeyValueEntity(uuid=uuid, val=self._data.get(uuid, None))
 
-    def get_all(
+    def get_all(  # type: ignore
         self,
         limit: t.Optional[int] = None,  # dead: disable
         offset: t.Optional[int] = None,  # dead: disable
@@ -52,7 +50,7 @@ class DictRepositoryAdapter(  # dead: disable
         """Retrieve all dict data."""
         return [KeyValueEntity(uuid=k, val=v) for k, v in self._data.items()]
 
-    def insert(  # dead: disable
+    def insert(  # type: ignore  # dead: disable
         self, entity: KeyValueEntity
     ) -> t.Optional[KeyValueEntity]:
         """Insert row into table."""
@@ -62,7 +60,7 @@ class DictRepositoryAdapter(  # dead: disable
         self._data[entity.uuid] = entity.value
         return entity
 
-    def update(  # dead: disable
+    def update(  # type: ignore  # dead: disable
         self, entity: KeyValueEntity
     ) -> t.Optional[KeyValueEntity]:
         """Update row in table."""
@@ -81,9 +79,7 @@ class DictRepositoryAdapter(  # dead: disable
         return True
 
 
-class EnvironRepository(  # dead: disable
-    BaseViewRepository  # type: ignore
-):
+class EnvironRepository(BaseViewRepository):  # dead: disable
     """Environment variables read only repository."""
 
     def get_one(self, uuid: str) -> t.Optional[KeyValueEntity]:  # dead: disable
@@ -94,7 +90,7 @@ class EnvironRepository(  # dead: disable
 
         return None if val is None else KeyValueEntity(uuid=uuid, val=val)
 
-    def get_all(
+    def get_all(  # type: ignore
         self,
         limit: t.Optional[int] = None,  # dead: disable
         offset: t.Optional[int] = None,  # dead: disable

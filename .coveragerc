@@ -8,6 +8,11 @@ include =
 omit =
     .tox
     setup.py
+    src/mediapills/core/controllers.py
+    src/mediapills/core/domain/usecases.py
+    src/mediapills/core/domain/outputs.py
+    src/mediapills/core/requests.py
+    src/mediapills/core/responses.py
 
 [report]
 exclude_lines =

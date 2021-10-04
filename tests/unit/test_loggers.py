@@ -35,24 +35,24 @@ class TestPythonLoggerAdapter(unittest.TestCase):
     def test_debug_should_call_logger_debug(self) -> None:
         python_logger = self.mock_logger
         python_logger.debug("test")
-        python_logger._logger.debug.assert_called_once_with("test")
+        python_logger._logger.debug.assert_called_once_with("test")  # type: ignore
 
     def test_info_should_call_logger_info(self) -> None:
         python_logger = self.mock_logger
         python_logger.info("test")
-        python_logger._logger.info.assert_called_once_with("test")
+        python_logger._logger.info.assert_called_once_with("test")  # type: ignore
 
     def test_warn_should_call_logger_warn(self) -> None:
         python_logger = self.mock_logger
         python_logger.warn("test")
-        python_logger._logger.warn.assert_called_once_with("test")
+        python_logger._logger.warn.assert_called_once_with("test")  # type: ignore
 
     def test_warning_should_call_logger_warning(self) -> None:
         python_logger = self.mock_logger
         python_logger.warning("test")
-        python_logger._logger.warning.assert_called_once_with("test")
+        python_logger._logger.warning.assert_called_once_with("test")  # type: ignore
 
     def test_error_should_call_logger_error(self) -> None:
         python_logger = self.mock_logger
         python_logger.error("test")
-        python_logger._logger.error.assert_called_once_with("test")
+        python_logger._logger.error.assert_called_once_with("test")  # type: ignore

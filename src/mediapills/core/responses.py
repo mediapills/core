@@ -130,9 +130,7 @@ class HTTPResponseStatus(Enum):
     SERVER_ERROR = HTTP_RESPONSE_STATUS_CODE_INTERNAL_SERVER_ERROR  # dead: disable
 
 
-class BaseHTTPResponse(  # dead: disable
-    BaseOutput, metaclass=abc.ABCMeta  # type: ignore
-):
+class BaseHTTPResponse(BaseOutput, metaclass=abc.ABCMeta):  # dead: disable
     """Response content made by a named host, to a client."""
 
     @property  # type: ignore

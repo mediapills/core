@@ -38,7 +38,7 @@ class TestDictRepositoryAdapter(unittest.TestCase):
     def test_find_one_should_return_one(self) -> None:
         repo = DictRepositoryAdapter({"key": "val"})
 
-        self.assertEqual("val", repo.get_one("key").value)
+        self.assertEqual("val", repo.get_one("key").value)  # type: ignore
 
     def test_find_all_should_return_data(self) -> None:
         repo = DictRepositoryAdapter({"key": "val"})
@@ -57,7 +57,7 @@ class TestDictRepositoryAdapter(unittest.TestCase):
         record = Mock(uuid="key")
         repo.update(record)
 
-        self.assertNotEqual("val", repo.get_one("key").value)
+        self.assertNotEqual("val", repo.get_one("key").value)  # type: ignore
 
     def test_delete_should_remove(self) -> None:
         repo = DictRepositoryAdapter({"key": "val"})
@@ -81,7 +81,7 @@ class TestEnvironRepository(unittest.TestCase):
         repo = EnvironRepository()
         obj = repo.get_one("key")
 
-        self.assertEqual("value", obj.value)
+        self.assertEqual("value", obj.value)  # type: ignore
 
     @patch(_MODULE_LOCATION_OS_ENVIRON_, MOCK_ENVIRON)
     def test_find_all_should_return_all(self) -> None:
@@ -109,7 +109,7 @@ class TestEnvironRepository(unittest.TestCase):
         obj = repo.get_one("lower_case_key")
 
         self.assertIsNotNone(obj)
-        self.assertEqual("lower_case_value", obj.value)
+        self.assertEqual("lower_case_value", obj.value)  # type: ignore
         self.assertIsNone(repo.get_one("LOWER_CASE_KEY"))
 
     # TODO check if sys.platform can help here for win
@@ -120,5 +120,5 @@ class TestEnvironRepository(unittest.TestCase):
         obj = repo.get_one("UPPER_CASE_KEY")
 
         self.assertIsNotNone(obj)
-        self.assertEqual("upper_case_value", obj.value)
+        self.assertEqual("upper_case_value", obj.value)  # type: ignore
         self.assertIsNone(repo.get_one("upper_case_key"))
