@@ -105,12 +105,12 @@ class BaseHTTPRequest(metaclass=abc.ABCMeta):  # dead: disable
 
     @property
     @abc.abstractmethod
-    def headers(self) -> Dict[str, str]:  # dead: disable
+    def headers(self) -> Dict[str, str]:
         """Additional information with an HTTP request or response."""
         raise NotImplementedError()
 
     @property
     @abc.abstractmethod
-    def cookies(self) -> Dict[str, str]:  # dead: disable
+    def cookies(self) -> Dict[str, str]:
         """Small piece of data that a server gets from the user's web browser."""
         raise NotImplementedError()
