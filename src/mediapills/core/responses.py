@@ -22,6 +22,7 @@ import abc
 import typing as t
 from enum import Enum
 
+from mediapills.core.domain.outputs import BaseOutput
 
 """The request succeeded."""
 HTTP_RESPONSE_STATUS_CODE_OK = 200
@@ -127,7 +128,9 @@ class HTTPResponseStatus(Enum):
     SERVER_ERROR = HTTP_RESPONSE_STATUS_CODE_INTERNAL_SERVER_ERROR  # dead: disable
 
 
-class BaseHTTPResponse(metaclass=abc.ABCMeta):  # dead: disable
+class BaseHTTPResponse(  # dead: disable
+    BaseOutput, metaclass=abc.ABCMeta  # type: ignore
+):
     """Response content made by a named host, to a client."""
 
     @property  # type: ignore
@@ -140,18 +143,6 @@ class BaseHTTPResponse(metaclass=abc.ABCMeta):  # dead: disable
     @abc.abstractmethod
     def status(self, value: HTTPResponseStatus) -> None:
         """HTTP status code setter."""
-        raise NotImplementedError()
-
-    @property  # type: ignore
-    @abc.abstractmethod
-    def data(self) -> t.Any:
-        """HTTP response data getter."""
-        raise NotImplementedError()
-
-    @data.setter  # type: ignore
-    @abc.abstractmethod
-    def data(self, value: t.Any) -> None:
-        """HTTP response data setter."""
         raise NotImplementedError()
 
     @property  # type: ignore
