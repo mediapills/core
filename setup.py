@@ -9,7 +9,7 @@ except ImportError:
     from pip.req import parse_requirements  # type: ignore
     from pip.network.session import PipSession  # type: ignore
 
-version = "0.0.3"
+version = "0.0.3.rc1"
 
 requirements = parse_requirements("requirements.txt", session=PipSession())
 

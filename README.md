@@ -1,6 +1,6 @@
-[![GitHub Workflow Actions Status](https://github.com/mediapills/core/workflows/CI%20Build/badge.svg?branch=0.0.3)](https://github.com/mediapills/core/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/mediapills/core/blob/0.0.3/LICENSE.md)
-[![Requirements Status](https://requires.io/github/mediapills/core/requirements.svg?branch=0.0.3)](https://requires.io/github/mediapills/core/requirements/?branch=0.0.3)
+[![GitHub Workflow Actions Status](https://github.com/mediapills/core/workflows/CI%20Build/badge.svg?branch=main)](https://github.com/mediapills/core/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/mediapills/core/blob/main/LICENSE.md)
+[![Requirements Status](https://requires.io/github/mediapills/core/requirements.svg?branch=main)](https://requires.io/github/mediapills/core/requirements/?branch=main)
 
 
 # Install
@@ -16,7 +16,7 @@ python3 -m venv mediapills
 
 source mediapills/bin/activate
 
-pip install git+ssh://git@github.com/mediapills/core.git@0.0.3#egg=mediapills.core
+pip install git+ssh://git@github.com/mediapills/core.git@main#egg=mediapills.core
 ```
 
 ## Windows (CMD/PowerShell)
@@ -30,5 +30,5 @@ python3 -m venv mediapills
 
 ./mediapills/bin/activate
 
-pip install git+ssh://git@github.com/mediapills/core.git@0.0.3#egg=mediapills.core
+pip install git+ssh://git@github.com/mediapills/core.git@main#egg=mediapills.core
 ```
