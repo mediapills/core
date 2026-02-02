@@ -42,16 +42,16 @@ class DictRepositoryAdapter(BaseRepository):  # dead: disable
 
         return KeyValueEntity(uuid=uuid, val=self._data.get(uuid, None))
 
-    def get_all(  # type: ignore
+    def get_all(  # type: ignore[override]
         self,
-        limit: t.Optional[int] = None,  # dead: disable
-        offset: t.Optional[int] = None,  # dead: disable
+        limit: t.Optional[int] = None,
+        offset: t.Optional[int] = None,
     ) -> t.List[KeyValueEntity]:
         """Retrieve all dict data."""
         return [KeyValueEntity(uuid=k, val=v) for k, v in self._data.items()]
 
-    def insert(  # type: ignore  # dead: disable
-        self, entity: KeyValueEntity
+    def insert(  # dead: disable
+        self, entity: KeyValueEntity  # type: ignore[override]
     ) -> t.Optional[KeyValueEntity]:
         """Insert row into table."""
         if entity.uuid in self._data:
@@ -60,8 +60,8 @@ class DictRepositoryAdapter(BaseRepository):  # dead: disable
         self._data[entity.uuid] = entity.value
         return entity
 
-    def update(  # type: ignore  # dead: disable
-        self, entity: KeyValueEntity
+    def update(  # dead: disable
+        self, entity: KeyValueEntity  # type: ignore[override]
     ) -> t.Optional[KeyValueEntity]:
         """Update row in table."""
         if entity.uuid not in self._data:
@@ -90,10 +90,10 @@ class EnvironRepository(BaseViewRepository):  # dead: disable
 
         return None if val is None else KeyValueEntity(uuid=uuid, val=val)
 
-    def get_all(  # type: ignore
+    def get_all(  # type: ignore[override]
         self,
-        limit: t.Optional[int] = None,  # dead: disable
-        offset: t.Optional[int] = None,  # dead: disable
+        limit: t.Optional[int] = None,
+        offset: t.Optional[int] = None,
     ) -> t.List[KeyValueEntity]:
         """Retrieve all environment variables."""
         items = dict(os.environ).items()

@@ -69,7 +69,7 @@ class BaseEntity(metaclass=abc.ABCMeta):
     pass
 
 
-class BaseUUIDAwareEntity(BaseEntity, metaclass=abc.ABCMeta):
+class BaseUniqueEntity(BaseEntity, metaclass=abc.ABCMeta):
     """Entity with uuid property interface."""
 
     __slots__ = ["_uuid"]
@@ -89,7 +89,7 @@ class BaseUUIDAwareEntity(BaseEntity, metaclass=abc.ABCMeta):
         self._uuid = uuid
 
 
-class KeyValueEntity(BaseUUIDAwareEntity):
+class KeyValueEntity(BaseUniqueEntity):
     """Entity for key-value storages."""
 
     __slots__ = ["_uuid", "_value"]

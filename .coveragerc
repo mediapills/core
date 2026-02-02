@@ -3,8 +3,6 @@ source =
     src/
 
 [run]
-include =
-    src/
 omit =
     .tox
     setup.py

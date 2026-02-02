@@ -133,37 +133,37 @@ class HTTPResponseStatus(Enum):
 class BaseHTTPResponse(BaseOutput, metaclass=abc.ABCMeta):  # dead: disable
     """Response content made by a named host, to a client."""
 
-    @property  # type: ignore
+    @property
     @abc.abstractmethod
     def status(self) -> HTTPResponseStatus:
         """HTTP status code getter."""
         raise NotImplementedError()
 
-    @status.setter  # type: ignore
+    @status.setter
     @abc.abstractmethod
     def status(self, value: HTTPResponseStatus) -> None:
         """HTTP status code setter."""
         raise NotImplementedError()
 
-    @property  # type: ignore
+    @property
     @abc.abstractmethod
     def headers(self) -> t.Dict[str, str]:
         """Headers property getter."""
         raise NotImplementedError()
 
-    @headers.setter  # type: ignore
+    @headers.setter
     @abc.abstractmethod
     def headers(self, headers: t.Dict[str, str]) -> None:
         """Headers property setter."""
         raise NotImplementedError()
 
-    @property  # type: ignore
+    @property
     @abc.abstractmethod
     def cookies(self) -> t.Dict[str, str]:
         """Cookies property getter."""
         raise NotImplementedError()
 
-    @cookies.setter  # type: ignore
+    @cookies.setter
     @abc.abstractmethod
     def cookies(self, cookie: t.Dict[str, str]) -> None:
         """Cookies property setter."""

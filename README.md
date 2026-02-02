@@ -1,7 +1,5 @@
 [![GitHub Workflow Actions Status](https://github.com/mediapills/core/workflows/CI%20Build/badge.svg?branch=main)](https://github.com/mediapills/core/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/mediapills/core/blob/main/LICENSE.md)
-[![Requirements Status](https://requires.io/github/mediapills/core/requirements.svg?branch=main)](https://requires.io/github/mediapills/core/requirements/?branch=main)
-
 
 # Install
 

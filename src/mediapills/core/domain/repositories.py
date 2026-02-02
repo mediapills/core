@@ -23,13 +23,13 @@ from abc import abstractmethod
 from typing import List
 from typing import Optional
 
-from mediapills.core.domain.entities import BaseUUIDAwareEntity
+from mediapills.core.domain.entities import BaseUniqueEntity
 
 
 class BaseViewRepository(metaclass=ABCMeta):
     """Well documented way of working with read only data source."""
 
-    def get_one(self, uuid: str) -> Optional[BaseUUIDAwareEntity]:  # dead: disable
+    def get_one(self, uuid: str) -> Optional[BaseUniqueEntity]:  # dead: disable
         """Retrieve row selected from one or more tables."""
         filtered = filter(lambda entity: entity.uuid == uuid, self.get_all())
         return next(filtered, None)
@@ -37,7 +37,7 @@ class BaseViewRepository(metaclass=ABCMeta):
     @abstractmethod
     def get_all(
         self, limit: Optional[int] = None, offset: Optional[int] = None
-    ) -> List[BaseUUIDAwareEntity]:
+    ) -> List[BaseUniqueEntity]:
         """Retrieve rows selected from one or more tables."""
         raise NotImplementedError()
 
@@ -47,15 +47,15 @@ class BaseRepository(BaseViewRepository, metaclass=ABCMeta):
 
     @abstractmethod
     def insert(  # dead: disable
-        self, entity: BaseUUIDAwareEntity
-    ) -> Optional[BaseUUIDAwareEntity]:
+        self, entity: BaseUniqueEntity
+    ) -> Optional[BaseUniqueEntity]:
         """Insert row into table."""
         raise NotImplementedError()
 
     @abstractmethod
     def update(  # dead: disable
-        self, entity: BaseUUIDAwareEntity
-    ) -> Optional[BaseUUIDAwareEntity]:
+        self, entity: BaseUniqueEntity
+    ) -> Optional[BaseUniqueEntity]:
         """Update row in table."""
         raise NotImplementedError()
 
