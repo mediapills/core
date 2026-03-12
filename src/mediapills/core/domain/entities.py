@@ -119,7 +119,7 @@ class BaseImmutableEntity(BaseUniqueEntity, metaclass=abc.ABCMeta):
         super().__init__(uuid=uuid)
 
 
-class BaseMutableEntity(BaseImmutableEntity, metaclass=abc.ABCMeta):  # dead: disable
+class BaseMutableEntity(BaseImmutableEntity, metaclass=abc.ABCMeta):
     """Abstract base class for mutable entities with a unique identifier."""
 
     __slots__ = ["_created_at", "_updated_at"]
