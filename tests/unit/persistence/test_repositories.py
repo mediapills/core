@@ -23,10 +23,10 @@ import unittest
 from unittest.mock import Mock
 from unittest.mock import patch
 
-from mediapills.core.repositories import DictRepositoryAdapter
-from mediapills.core.repositories import EnvironRepository
+from mediapills.core.persistence.repositories import DictRepositoryAdapter
+from mediapills.core.persistence.repositories import EnvironRepository
 
-_MODULE_LOCATION_OS_ENVIRON_ = "mediapills.core.repositories.os.environ"
+_MODULE_LOCATION_OS_ENVIRON_ = "mediapills.core.persistence.repositories.os.environ"
 
 
 class TestDictRepositoryAdapter(unittest.TestCase):
