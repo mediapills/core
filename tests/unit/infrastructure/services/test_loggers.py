@@ -21,7 +21,7 @@
 import unittest
 from unittest.mock import Mock
 
-from mediapills.core.infrastructure.loggers import PythonLoggerAdapter
+from mediapills.core.infrastructure.services.loggers import PythonLoggerAdapter
 
 
 class TestPythonLoggerAdapter(unittest.TestCase):

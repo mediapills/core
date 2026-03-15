@@ -19,56 +19,35 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import abc
-import typing as t
+import typing as T
 
-from mediapills.core.domain.entities import LoggingLevel
+from mediapills.core.domain import LoggingLevel
 
 
 class BaseLogger(metaclass=abc.ABCMeta):
     """Describe PEP 282 logging class interface."""
 
     @abc.abstractmethod
-    def log(
-        self,
-        lvl: LoggingLevel,
-        msg: str,
-        *args: t.List[t.Any],
-        **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def log(self, lvl: LoggingLevel, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """General logging method."""
         raise NotImplementedError()
 
-    @abc.abstractmethod
-    def debug(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def debug(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level DEBUG on this logger."""
         self.log(LoggingLevel.DEBUG, msg, *args, **kwargs)
 
-    @abc.abstractmethod
-    def info(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def info(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level INFO on this logger."""
         self.log(LoggingLevel.INFO, msg, *args, **kwargs)
 
-    @abc.abstractmethod
-    def warn(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def warn(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level WARN on this logger."""
         self.log(LoggingLevel.WARN, msg, *args, **kwargs)
 
-    @abc.abstractmethod
-    def error(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def error(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level ERROR on this logger."""
         self.log(LoggingLevel.ERROR, msg, *args, **kwargs)
 
-    @abc.abstractmethod
-    def critical(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def critical(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level CRITICAL on this logger."""
         self.log(LoggingLevel.CRITICAL, msg, *args, **kwargs)

@@ -20,12 +20,23 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import logging
 import sys
-import typing as t
+import typing as T
+from enum import Enum
 
-from mediapills.core.domain.entities import LoggingLevel
-from mediapills.core.domain.loggers import BaseLogger
+from mediapills.core.domain import LoggingLevel as BaseLoggingLevel
+from mediapills.core.domain.services.loggers import BaseLogger
 
 """This module implements classes with BaseLogger interface."""
+
+
+class LoggingLevel(Enum):
+    """Enumerated logging levels for standardized log message categorization."""
+
+    LOGGING_LEVEL_DEBUG = 10
+    LOGGING_LEVEL_INFO = 20
+    LOGGING_LEVEL_WARN = 30
+    LOGGING_LEVEL_ERROR = 40
+    LOGGING_LEVEL_CRITICAL = 50
 
 
 class PythonLoggerAdapter(BaseLogger):  # dead: disable
@@ -40,47 +51,31 @@ class PythonLoggerAdapter(BaseLogger):  # dead: disable
         self._logger = logger
 
     def log(
-        self,
-        lvl: LoggingLevel,
-        msg: str,
-        *args: t.List[t.Any],
-        **kwargs: t.Dict[str, t.Any]
+        self, lvl: BaseLoggingLevel, msg: str, *args: T.Any, **kwargs: T.Any
     ) -> None:
         """General logging method."""
-        self._logger.log(lvl.value, msg, *args, **kwargs)  # type: ignore[arg-type]
+        self._logger.log(LoggingLevel[lvl.value].value, msg, *args, **kwargs)
 
-    def debug(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def debug(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level DEBUG on this logger."""
-        self._logger.debug(msg, *args, **kwargs)  # type: ignore[arg-type]
+        self._logger.debug(msg, *args, **kwargs)
 
-    def info(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def info(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level INFO on this logger."""
-        self._logger.info(msg, *args, **kwargs)  # type: ignore[arg-type]
+        self._logger.info(msg, *args, **kwargs)
 
-    def warn(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def warn(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level WARN on this logger."""
-        self._logger.warn(msg, *args, **kwargs)  # type: ignore[arg-type]
+        self._logger.warn(msg, *args, **kwargs)
 
-    def warning(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def warning(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level WARN alias."""
-        self._logger.warning(msg, *args, **kwargs)  # type: ignore[arg-type]
+        self._logger.warning(msg, *args, **kwargs)
 
-    def error(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def error(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level ERROR on this logger."""
-        self._logger.error(msg, *args, **kwargs)  # type: ignore[arg-type]
+        self._logger.error(msg, *args, **kwargs)
 
-    def critical(
-        self, msg: str, *args: t.List[t.Any], **kwargs: t.Dict[str, t.Any]
-    ) -> None:
+    def critical(self, msg: str, *args: T.Any, **kwargs: T.Any) -> None:
         """Log a message with level CRITICAL on this logger."""
-        self._logger.critical(msg, *args, **kwargs)  # type: ignore[arg-type]
+        self._logger.critical(msg, *args, **kwargs)

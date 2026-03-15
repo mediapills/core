@@ -67,7 +67,7 @@ repos:
          ^tests/.*\.py$
        args:
          - --convention=pep257
-         - --add-ignore=D100,D205,D400
+         - --add-ignore=D100,D104,D205,D400
  - repo: https://github.com/yunojuno/pre-commit-xenon
    rev: cc59b0431a5d072786b59430e9b342b2881064f6
    hooks:
