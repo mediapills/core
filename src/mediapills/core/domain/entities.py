@@ -35,7 +35,7 @@ class BaseEntity(metaclass=abc.ABCMeta):
 class BaseUniqueEntity(BaseEntity, metaclass=abc.ABCMeta):
     """Abstract base class for entities with a unique UUID property."""
 
-    __slots__ = ["_uuid"]
+    __slots__ = ("_uuid",)
 
     def __init__(self, uuid: str):
         """
@@ -70,7 +70,7 @@ class BaseUniqueEntity(BaseEntity, metaclass=abc.ABCMeta):
 class BaseImmutableEntity(BaseUniqueEntity, metaclass=abc.ABCMeta):
     """Abstract base class for immutable entities with a unique identifier."""
 
-    __slots__ = ["_created_at"]
+    __slots__ = tuple(BaseUniqueEntity.__slots__) + ("_created_at",)
 
     def __init__(self, uuid: str):
         """Initialize the immutable entity."""
@@ -80,7 +80,7 @@ class BaseImmutableEntity(BaseUniqueEntity, metaclass=abc.ABCMeta):
 class BaseMutableEntity(BaseImmutableEntity, metaclass=abc.ABCMeta):
     """Abstract base class for mutable entities with a unique identifier."""
 
-    __slots__ = ["_created_at", "_updated_at"]
+    __slots__ = tuple(BaseImmutableEntity.__slots__) + ("_updated_at",)
 
     def __init__(self, uuid: str, val: Any):
         """Initialize the mutable entity."""
@@ -91,7 +91,7 @@ class BaseMutableEntity(BaseImmutableEntity, metaclass=abc.ABCMeta):
 class KeyValueEntity(BaseUniqueEntity):
     """Entity representing a key-value pair, suitable for key-value storage systems."""
 
-    __slots__ = ["_uuid", "_value"]
+    __slots__ = tuple(BaseUniqueEntity.__slots__) + ("_value",)
 
     def __init__(self, uuid: str, val: Any):
         """
