@@ -25,7 +25,7 @@ from abc import abstractmethod
 from mediapills.core.domain.entities import BaseUniqueEntity
 
 
-class BaseViewRepository(metaclass=ABCMeta):
+class BaseRepository(metaclass=ABCMeta):
     """Well documented way of working with read only data source."""
 
     @staticmethod
@@ -52,27 +52,4 @@ class BaseViewRepository(metaclass=ABCMeta):
         self, limit: t.Optional[int] = None, offset: t.Optional[int] = None
     ) -> t.List[BaseUniqueEntity]:
         """Retrieve rows selected from one or more tables."""
-        raise NotImplementedError()
-
-
-class BaseRepository(BaseViewRepository, metaclass=ABCMeta):
-    """Well documented way of working with manageable data source."""
-
-    @abstractmethod
-    def insert(  # dead: disable
-        self, entity: BaseUniqueEntity
-    ) -> t.Optional[BaseUniqueEntity]:
-        """Insert row into table."""
-        raise NotImplementedError()
-
-    @abstractmethod
-    def update(  # dead: disable
-        self, entity: BaseUniqueEntity
-    ) -> t.Optional[BaseUniqueEntity]:
-        """Update row in table."""
-        raise NotImplementedError()
-
-    @abstractmethod
-    def delete(self, uuid: str) -> bool:  # dead: disable
-        """Delete row from table that satisfy the condition where uuid equal value."""
         raise NotImplementedError()

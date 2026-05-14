@@ -24,10 +24,9 @@ import typing as t
 
 from mediapills.core.domain.entities import KeyValueEntity
 from mediapills.core.domain.repositories import BaseRepository
-from mediapills.core.domain.repositories import BaseViewRepository
 
 
-class DictRepositoryAdapter(BaseRepository):  # dead: disable
+class DictRepositoryAdapter(BaseRepository):
     """Dictionary variables repository adapter."""
 
     def __init__(self, data: t.Optional[t.Dict[str, t.Any]] = None):
@@ -51,36 +50,8 @@ class DictRepositoryAdapter(BaseRepository):  # dead: disable
         pairs = self._slice_items(self._data.items(), limit=limit, offset=offset)
         return [KeyValueEntity(uuid=k, val=v) for k, v in pairs]
 
-    def insert(  # dead: disable
-        self, entity: KeyValueEntity  # type: ignore[override]
-    ) -> t.Optional[KeyValueEntity]:
-        """Insert row into table."""
-        if entity.uuid in self._data:
-            raise KeyError(entity.uuid)
 
-        self._data[entity.uuid] = entity.value
-        return entity
-
-    def update(  # dead: disable
-        self, entity: KeyValueEntity  # type: ignore[override]
-    ) -> t.Optional[KeyValueEntity]:
-        """Update row in table."""
-        if entity.uuid not in self._data:
-            raise KeyError(entity.uuid)
-
-        self._data[entity.uuid] = entity.value
-        return entity
-
-    def delete(self, uuid: str) -> bool:  # dead: disable
-        """Delete row from table that satisfy the condition where uuid equal value."""
-        if uuid not in self._data:
-            return False
-
-        del self._data[uuid]
-        return True
-
-
-class EnvironRepository(BaseViewRepository):  # dead: disable
+class EnvironRepository(BaseRepository):  # dead: disable
     """Environment variables read only repository."""
 
     def get_one(self, uuid: str) -> t.Optional[KeyValueEntity]:  # dead: disable

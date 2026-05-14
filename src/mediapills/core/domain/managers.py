@@ -30,6 +30,7 @@ from mediapills.core.domain.repositories import BaseRepository
 class ImmutableEntityManager(metaclass=ABCMeta):
     """EntityManager for entities that support insert-only (immutable) operations."""
 
+    @property
     @abstractmethod
     def repository(self) -> BaseRepository:  # dead: disable
         """Get the repository instance associated with this manager."""
@@ -50,7 +51,7 @@ class MutableEntityManager(ImmutableEntityManager, metaclass=ABCMeta):
         raise NotImplementedError()
 
 
-class PersistentEntityManager(MutableEntityManager, metaclass=ABCMeta):  # dead: disable
+class PersistentEntityManager(MutableEntityManager, metaclass=ABCMeta):
     """Manager for entities that support full CRUD (insert, update, delete) operations."""
 
     @abstractmethod

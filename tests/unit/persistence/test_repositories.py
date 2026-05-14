@@ -22,7 +22,6 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from mediapills.core.domain.entities import KeyValueEntity
 from mediapills.core.persistence.repositories import DictRepositoryAdapter
 from mediapills.core.persistence.repositories import EnvironRepository
 
@@ -45,48 +44,6 @@ class TestDictRepositoryAdapter(unittest.TestCase):
         repo = DictRepositoryAdapter({"key": "val"})
 
         self.assertEqual(1, len(repo.get_all()))
-
-    def test_insert_should_add(self) -> None:
-        repo = DictRepositoryAdapter({})
-        record = KeyValueEntity(uuid="new", val="inserted")
-        returned = repo.insert(record)
-
-        self.assertIs(returned, record)
-        self.assertEqual(1, len(repo.get_all()))
-        stored = repo.get_one("new")
-        self.assertIsNotNone(stored)
-        self.assertEqual("inserted", stored.value)
-
-    def test_insert_should_raise_when_uuid_exists(self) -> None:
-        repo = DictRepositoryAdapter({"key": "existing"})
-        with self.assertRaises(KeyError):
-            repo.insert(KeyValueEntity(uuid="key", val="other"))
-
-    def test_update_should_replace(self) -> None:
-        repo = DictRepositoryAdapter({"key": "val"})
-        record = KeyValueEntity(uuid="key", val="replaced")
-        returned = repo.update(record)
-
-        self.assertIs(returned, record)
-        stored = repo.get_one("key")
-        self.assertIsNotNone(stored)
-        self.assertEqual("replaced", stored.value)
-
-    def test_update_should_raise_when_uuid_missing(self) -> None:
-        repo = DictRepositoryAdapter({})
-        with self.assertRaises(KeyError):
-            repo.update(KeyValueEntity(uuid="missing", val="x"))
-
-    def test_delete_should_remove(self) -> None:
-        repo = DictRepositoryAdapter({"key": "val"})
-
-        self.assertTrue(repo.delete("key"))
-        self.assertEqual(0, len(repo.get_all()))
-
-    def test_delete_should_skip(self) -> None:
-        repo = DictRepositoryAdapter()
-
-        self.assertFalse(repo.delete("key"))
 
 
 class TestEnvironRepository(unittest.TestCase):
