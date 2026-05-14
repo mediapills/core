@@ -37,7 +37,7 @@ jobs:
     needs: checks
     env:
       # tox.ini uses py39, py310, … (no dots); PyPy uses env name "pypy".
-      TOXENV: ${{ startsWith(matrix.python-version, 'pypy') && 'pypy' || format('py{0}', replace(matrix.python-version, '.', '')) }}
+      TOXENV: ${{ startsWith(matrix.python-version, 'pypy') && 'pypy' || format('py{0}', matrix.python-version) }}
     strategy:
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
@@ -56,8 +56,7 @@ jobs:
             os: windows-latest
           - python-version: pypy-3.9
             os: windows-latest
-
-          # limit the number of Windows build jobs to optimize resource usage and control costs
+          # limit the number of MacOS build jobs to optimize resource usage and control costs
           - python-version: 3.9
             os: macos-latest
           - python-version: 3.10
@@ -70,6 +69,7 @@ jobs:
             os: macos-latest
           - python-version: pypy-3.9
             os: macos-latest
+
 
     steps:
     - uses: actions/checkout@v2
