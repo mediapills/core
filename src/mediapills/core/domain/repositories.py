@@ -18,10 +18,9 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+import typing as t
 from abc import ABCMeta
 from abc import abstractmethod
-from typing import List
-from typing import Optional
 
 from mediapills.core.domain.entities import BaseUniqueEntity
 
@@ -29,15 +28,29 @@ from mediapills.core.domain.entities import BaseUniqueEntity
 class BaseViewRepository(metaclass=ABCMeta):
     """Well documented way of working with read only data source."""
 
-    def get_one(self, uuid: str) -> Optional[BaseUniqueEntity]:  # dead: disable
+    @staticmethod
+    def _slice_items(
+        items: t.Iterable[t.Tuple[str, t.Any]],
+        limit: t.Optional[int],
+        offset: t.Optional[int],
+    ) -> t.List[t.Tuple[str, t.Any]]:
+        """Apply limit/offset over an ordered sequence of (key, value) pairs."""
+        seq = list(items)
+        start = 0 if offset is None else max(offset, 0)
+        if limit is None:
+            return seq[start:]
+        end = start + max(limit, 0)
+        return seq[start:end]
+
+    def get_one(self, uuid: str) -> t.Optional[BaseUniqueEntity]:  # dead: disable
         """Retrieve row selected from one or more tables."""
         filtered = filter(lambda entity: entity.uuid == uuid, self.get_all())
         return next(filtered, None)
 
     @abstractmethod
     def get_all(
-        self, limit: Optional[int] = None, offset: Optional[int] = None
-    ) -> List[BaseUniqueEntity]:
+        self, limit: t.Optional[int] = None, offset: t.Optional[int] = None
+    ) -> t.List[BaseUniqueEntity]:
         """Retrieve rows selected from one or more tables."""
         raise NotImplementedError()
 
@@ -48,14 +61,14 @@ class BaseRepository(BaseViewRepository, metaclass=ABCMeta):
     @abstractmethod
     def insert(  # dead: disable
         self, entity: BaseUniqueEntity
-    ) -> Optional[BaseUniqueEntity]:
+    ) -> t.Optional[BaseUniqueEntity]:
         """Insert row into table."""
         raise NotImplementedError()
 
     @abstractmethod
     def update(  # dead: disable
         self, entity: BaseUniqueEntity
-    ) -> Optional[BaseUniqueEntity]:
+    ) -> t.Optional[BaseUniqueEntity]:
         """Update row in table."""
         raise NotImplementedError()
 

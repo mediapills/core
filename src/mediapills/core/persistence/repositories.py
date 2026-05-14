@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Core.
+# Copyright (c) 2021-2026 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -47,15 +47,16 @@ class DictRepositoryAdapter(BaseRepository):  # dead: disable
         limit: t.Optional[int] = None,
         offset: t.Optional[int] = None,
     ) -> t.List[KeyValueEntity]:
-        """Retrieve all dict data."""
-        return [KeyValueEntity(uuid=k, val=v) for k, v in self._data.items()]
+        """Retrieve dict data, optionally paginated by insertion order."""
+        pairs = self._slice_items(self._data.items(), limit=limit, offset=offset)
+        return [KeyValueEntity(uuid=k, val=v) for k, v in pairs]
 
     def insert(  # dead: disable
         self, entity: KeyValueEntity  # type: ignore[override]
     ) -> t.Optional[KeyValueEntity]:
         """Insert row into table."""
         if entity.uuid in self._data:
-            raise KeyError()
+            raise KeyError(entity.uuid)
 
         self._data[entity.uuid] = entity.value
         return entity
@@ -65,7 +66,7 @@ class DictRepositoryAdapter(BaseRepository):  # dead: disable
     ) -> t.Optional[KeyValueEntity]:
         """Update row in table."""
         if entity.uuid not in self._data:
-            raise KeyError()
+            raise KeyError(entity.uuid)
 
         self._data[entity.uuid] = entity.value
         return entity
@@ -86,7 +87,7 @@ class EnvironRepository(BaseViewRepository):  # dead: disable
         """Retrieve environment variable by name."""
         if sys.platform == "win32":
             uuid = uuid.upper()  # pragma: no cover
-        val = os.getenv(uuid)
+        val = os.environ.get(uuid)
 
         return None if val is None else KeyValueEntity(uuid=uuid, val=val)
 
@@ -95,6 +96,6 @@ class EnvironRepository(BaseViewRepository):  # dead: disable
         limit: t.Optional[int] = None,
         offset: t.Optional[int] = None,
     ) -> t.List[KeyValueEntity]:
-        """Retrieve all environment variables."""
-        items = dict(os.environ).items()
-        return [KeyValueEntity(uuid=k, val=v) for k, v in items]
+        """Return env vars as entities; optional limit/offset (environ order)."""
+        pairs = self._slice_items(os.environ.items(), limit=limit, offset=offset)
+        return [KeyValueEntity(uuid=k, val=v) for k, v in pairs]
