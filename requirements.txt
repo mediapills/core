@@ -1,0 +1,2 @@
+# Runtime: this library has no mandatory third-party dependencies.
+# Development, lint, and test tools are pinned in tox.ini and .pre-commit-config.yaml.

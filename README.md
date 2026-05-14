@@ -14,7 +14,7 @@ python3 -m venv mediapills
 
 source mediapills/bin/activate
 
-pip install git+ssh://git@github.com/mediapills/core.git@main#egg=mediapills.core
+pip install git+ssh://git@github.com/mediapills/core.git@main#egg=mediapills-core
 ```
 
 ## Windows (CMD/PowerShell)
@@ -28,5 +28,5 @@ python3 -m venv mediapills
 
 ./mediapills/bin/activate
 
-pip install git+ssh://git@github.com/mediapills/core.git@main#egg=mediapills.core
+pip install git+ssh://git@github.com/mediapills/core.git@main#egg=mediapills-core
 ```
