@@ -20,9 +20,9 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import sys
 import unittest
-from unittest.mock import Mock
 from unittest.mock import patch
 
+from mediapills.core.domain.entities import KeyValueEntity
 from mediapills.core.persistence.repositories import DictRepositoryAdapter
 from mediapills.core.persistence.repositories import EnvironRepository
 
@@ -37,8 +37,9 @@ class TestDictRepositoryAdapter(unittest.TestCase):
 
     def test_find_one_should_return_one(self) -> None:
         repo = DictRepositoryAdapter({"key": "val"})
-
-        self.assertEqual("val", repo.get_one("key").value)  # type: ignore
+        entity = repo.get_one("key")
+        self.assertIsNotNone(entity)
+        self.assertEqual("val", entity.value)
 
     def test_find_all_should_return_data(self) -> None:
         repo = DictRepositoryAdapter({"key": "val"})
@@ -47,17 +48,34 @@ class TestDictRepositoryAdapter(unittest.TestCase):
 
     def test_insert_should_add(self) -> None:
         repo = DictRepositoryAdapter({})
-        record = Mock()
-        repo.insert(record)
+        record = KeyValueEntity(uuid="new", val="inserted")
+        returned = repo.insert(record)
 
+        self.assertIs(returned, record)
         self.assertEqual(1, len(repo.get_all()))
+        stored = repo.get_one("new")
+        self.assertIsNotNone(stored)
+        self.assertEqual("inserted", stored.value)
+
+    def test_insert_should_raise_when_uuid_exists(self) -> None:
+        repo = DictRepositoryAdapter({"key": "existing"})
+        with self.assertRaises(KeyError):
+            repo.insert(KeyValueEntity(uuid="key", val="other"))
 
     def test_update_should_replace(self) -> None:
         repo = DictRepositoryAdapter({"key": "val"})
-        record = Mock(uuid="key")
-        repo.update(record)
+        record = KeyValueEntity(uuid="key", val="replaced")
+        returned = repo.update(record)
 
-        self.assertNotEqual("val", repo.get_one("key").value)  # type: ignore
+        self.assertIs(returned, record)
+        stored = repo.get_one("key")
+        self.assertIsNotNone(stored)
+        self.assertEqual("replaced", stored.value)
+
+    def test_update_should_raise_when_uuid_missing(self) -> None:
+        repo = DictRepositoryAdapter({})
+        with self.assertRaises(KeyError):
+            repo.update(KeyValueEntity(uuid="missing", val="x"))
 
     def test_delete_should_remove(self) -> None:
         repo = DictRepositoryAdapter({"key": "val"})
@@ -80,20 +98,16 @@ class TestEnvironRepository(unittest.TestCase):
     def test_find_one_should_return_one(self) -> None:
         repo = EnvironRepository()
         obj = repo.get_one("key")
-
-        self.assertEqual("value", obj.value)  # type: ignore
+        self.assertIsNotNone(obj)
+        self.assertEqual("value", obj.value)
 
     @patch(_MODULE_LOCATION_OS_ENVIRON_, MOCK_ENVIRON)
     def test_find_all_should_return_all(self) -> None:
         repo = EnvironRepository()
         data = repo.get_all()
-        key = "key"
-        # TODO must work in library not tests (move this if in lib)
-        if sys.platform == "win32":
-            key = "KEY"
 
         self.assertEqual(1, len(data))
-        self.assertEqual(key, data[0].uuid)
+        self.assertEqual("key", data[0].uuid)
 
     def test_find_one_wrong_key_should_return_none(self) -> None:
         repo = EnvironRepository()
@@ -101,7 +115,6 @@ class TestEnvironRepository(unittest.TestCase):
 
         self.assertIsNone(val)
 
-    # TODO check if sys.platform can help here for win
     @unittest.skipIf(sys.platform == "win32", reason="does not run on windows")
     @patch(_MODULE_LOCATION_OS_ENVIRON_, MOCK_ENVIRON_LOWER_CASE)
     def test_get_one_should_handle_lower_case_sensitivity(self) -> None:
@@ -109,10 +122,9 @@ class TestEnvironRepository(unittest.TestCase):
         obj = repo.get_one("lower_case_key")
 
         self.assertIsNotNone(obj)
-        self.assertEqual("lower_case_value", obj.value)  # type: ignore
+        self.assertEqual("lower_case_value", obj.value)
         self.assertIsNone(repo.get_one("LOWER_CASE_KEY"))
 
-    # TODO check if sys.platform can help here for win
     @unittest.skipIf(sys.platform == "win32", reason="does not run on windows")
     @patch(_MODULE_LOCATION_OS_ENVIRON_, MOCK_ENVIRON_UPPER_CASE)
     def test_get_one_should_handle_upper_case_sensitivity(self) -> None:
@@ -120,5 +132,5 @@ class TestEnvironRepository(unittest.TestCase):
         obj = repo.get_one("UPPER_CASE_KEY")
 
         self.assertIsNotNone(obj)
-        self.assertEqual("upper_case_value", obj.value)  # type: ignore
+        self.assertEqual("upper_case_value", obj.value)
         self.assertIsNone(repo.get_one("upper_case_key"))
