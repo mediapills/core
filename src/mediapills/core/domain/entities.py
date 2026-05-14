@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Core.
+# Copyright (c) 2021-2026 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -132,7 +132,7 @@ class LogRecordEntity(BaseEntity):  # dead: disable
     Includes message, level, logger name, and timestamp.
     """
 
-    __slots__ = ["_msg", "_name", "_lvl", "_created", "_thread"]
+    __slots__ = ("_msg", "_name", "_lvl", "_created")
 
     def __init__(
         self, msg: str, lvl: LoggingLevel, name: str, created: Optional[datetime] = None

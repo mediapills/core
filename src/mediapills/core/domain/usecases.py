@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Core.
+# Copyright (c) 2021-2026 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -20,8 +20,8 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import abc
 
-from mediapills.core.domain.loggers import BaseLogger
 from mediapills.core.domain.outputs import BaseOutput
+from mediapills.core.domain.services.loggers import BaseLogger
 
 
 class BaseUseCase(metaclass=abc.ABCMeta):
@@ -46,7 +46,7 @@ class BaseLoggerAwareUseCase(BaseUseCase, metaclass=abc.ABCMeta):
 
     @logger.setter
     def logger(self, logger: BaseLogger) -> None:
-        """Property logger getter."""
+        """Property logger setter."""
         self._logger = logger
 
 
@@ -67,5 +67,5 @@ class BaseOutputAwareUseCase(  # dead: disable
 
     @output.setter
     def output(self, output: BaseOutput) -> None:
-        """Property output getter."""
+        """Property output setter."""
         self._output = output

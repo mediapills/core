@@ -42,7 +42,6 @@ repos:
    hooks:
      - id: insert-license
        name: Add license for all Python files
-       exclude: ^docs/source/conf.py$
        types: [python]
        args:
          - --comment-style

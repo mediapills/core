@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2021 Mediapills Core.
+# Copyright (c) 2021-2026 Mediapills Core.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -20,26 +20,22 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from enum import Enum
 
-"""This is text"""
-
-"""Diagnostic information useful for debugging, intended for developers and advanced
-users."""
+# Diagnostic information useful for debugging, intended for developers and advanced
+# users.
 LOGGING_LEVEL_DEBUG = "debug"
 
-"""General operational events, such as service start/stop or configuration assumptions.
-"""
+# General operational events, such as service start/stop or configuration assumptions.
 LOGGING_LEVEL_INFO = "info"
 
-"""Non-fatal issues that may cause unexpected behavior but do not stop the application.
-"""
+# Non-fatal issues that may cause unexpected behavior but do not stop the application.
 LOGGING_LEVEL_WARN = "warn"
 
-"""Errors that are fatal to a specific operation but not to the overall service or
-application."""
+# Errors that are fatal to a specific operation but not to the overall service or
+# application.
 LOGGING_LEVEL_ERROR = "error"
 
-"""Severe errors that require immediate attention and may force a shutdown to prevent data
-loss."""
+# Severe errors that require immediate attention and may force a shutdown to prevent data
+# loss.
 LOGGING_LEVEL_CRITICAL = "critical"
 
 LOGGING_LEVELS = frozenset(  # dead: disable
